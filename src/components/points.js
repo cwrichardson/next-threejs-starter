@@ -8,12 +8,16 @@ import { vertex } from '@/glsl/vertex';
 import { fragment } from '@/glsl/fragment';
 
 export const Points = forwardRef((props, ref) => {
-    const { vertices } = props;
+    const { vertices, positions } = props;
     const shaderRef = useRef();
 
     useFrame((state, delta, xrFrame) => {
         // do animation
         // shaderRef.current.uniforms.uTime.value = state.clock.elapsedTime;
+
+        // executes 1/frame, so we can just directly morph the ref with a delta
+        ref.current.rotation.x += 0.01;
+        ref.current.rotation.y += 0.02;
     })
 
     return (
@@ -25,6 +29,7 @@ export const Points = forwardRef((props, ref) => {
               heightSegments={1}
             >
                 <bufferAttribute attach={'attributes-position'} args={[vertices, 3]} />
+                <bufferAttribute attach={'attributes-aCoords'} args={[positions, 2]} />
             </bufferGeometry>
             <shaderMaterial
               ref={shaderRef}

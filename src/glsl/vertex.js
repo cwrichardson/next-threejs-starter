@@ -1,9 +1,10 @@
 export const vertex = /* glsl */ `
     uniform float uTime;
+    attribute vec2 aCoords;
     varying vec2 vUv;
 
     void main() {
-        vUv = uv;
+        vUv = aCoords;
 
         vec4 mvPosition = modelViewMatrix * vec4( position, 1. );
         // start with big particles; give them some perspective
