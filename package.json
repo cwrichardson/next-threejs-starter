@@ -24,6 +24,7 @@
     "@pandacss/eslint-plugin": "^0.2.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.15",
+    "leva": "^0.9.35",
     "postcss": "^8.4.47"
   }
 }

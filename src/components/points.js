@@ -6,10 +6,25 @@ import { DoubleSide } from 'three';
 
 import { vertex } from '@/glsl/vertex';
 import { fragment } from '@/glsl/fragment';
+import { useControls } from 'leva';
 
 export const Points = forwardRef((props, ref) => {
     const { vertices, positions } = props;
     const shaderRef = useRef();
+
+    /**
+     * Use leva controls
+     */
+    const { progress } = useControls({
+        progress: {
+            value: 1,
+            min: 0,
+            max: 1,
+            onChange: (v) => {
+                shaderRef.current.uniforms.uProgress.value = v;
+            }
+        }
+    })
 
     useFrame((state, delta, xrFrame) => {
         // do animation
@@ -35,6 +50,7 @@ export const Points = forwardRef((props, ref) => {
               ref={shaderRef}
               extensions={{ derivatives: "#extension GL_OES_standard_derivatives : enable"}}
               uniforms={{
+                  uProgress: { value: 1 },
                   uTime: { value: 0 }
               }}
               vertexShader={vertex}
